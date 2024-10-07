@@ -1,0 +1,49 @@
+---
+title: "Worksheet Week 2"
+author: "Irene Tsapara"
+date: "2023-04-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is a contnuation of Worksheet 1. Append the following to your worksheet 1 and save everything into a new RMD that you should call Project. Work on this and submit it for Week 2.
+
+---
+
+PART 3
+Exploratory Descriptive Analysis step 1.
+***##### Section 3:  ( 9 points )  Getting insights about the data using graphs.***
+
+(a)	(2 point) Consider the table of counts using SEX and CLASS, you created above. Add margins to this table (Hint: There should be 15 cells in this table plus the marginal totals. Apply *table()* first, then pass the table object to *addmargins()* (Kabacoff Section 7.2 pages 144-147)).  Lastly, present a barplot of these data; ignoring the marginal totals. 
+ 
+
+**Essay Question (3 points):  Discuss the sex distribution of abalones.  What stands out about the distribution of abalones by CLASS?**
+
+(b)	(2 points) Using "work", construct a scatterplot matrix of variables 2-6 with *plot(work[, 2:6])* (these are the continuous variables excluding VOLUME and RATIO). The sample "work" will not be used in the remainder of the assignment.
+**Essay Question (2 points):  Discuss the relationships of the variables in your matrix. What information provides to you if any?
+
+***##### Section 4: ( 16 points) Summarizing the data using graphics.***
+
+
+(a)  (2 points) Use "mydata" to plot WHOLE versus VOLUME. Color code data points by CLASS.
+(b)	(2 points) Use "mydata" to plot a histogram of SHUCK and a histogram of WHOLE. Present the two histograms in parallel, the one next to the other and ensure that the y-axis units of the two histograms are the same so you can compare the results. Use title, legend, labels for the axis and different colors. 
+(c)	(2 points) Use "mydata" to plot a boxplot of SHUCK and a boxplot of WHOLE. Present the two histograms in parallel, the one next to the other, and ensure that the y-axis units of the two boxplots are the same so you can compare the results. Use title, legend, labels for the axis, and different colors. 
+(d)	(2 points) Now, plot parallel vertical boxplots of SHUCK by SEX. You should have three boxplots in one graph. Change the colors, titles, legends etc…
+(e)	(2 points) And finally plot parallel vertical boxplots of SHUCK by CLASS. You should have three boxplots in one graph. Change the colors, titles, legends etc…
+(f)	(4 points) Now, let’s compare SHUCK and WHOLE. Use "mydata" to plot SHUCK versus WHOLE with WHOLE on the horizontal axis. Color code data points by CLASS. As an aid to interpretation, determine the maximum value of the ratio of SHUCK to WHOLE.  Add to the chart a straight line with zero intercept using this maximum value as the slope of the line. If you are using the 'base R' *plot()* function, you may use *abline()* to add this line to the plot. Use *help(abline)* in R to determine the coding for the slope and intercept arguments in the functions. If you are using ggplot2 for visualizations, *geom_abline()* should be used.
+
+**Essay Question (2 points):  By now, you have enough data to review the relation of SHUCK and WHOLE and the dispersion of data. How does the variability in the last plot differ from the plot in (2a)?  Compare the two displays.  Keep in mind that SHUCK is a part of WHOLE.  Consider the location of the different age classes.**
+
+***### Section 5: (15 points) Getting insights about the data using graphs.***
+
+(a)	(6 points) Use "mydata" to create a multi-figured plot with histograms, boxplots and Q-Q plots of RATIO differentiated by sex. This can be done using *par(mfrow = c(3,3))* and base R or *grid.arrange()* and ggplot2. The first row would show the histograms, the second row the boxplots and the third row the Q-Q plots. Be sure these displays are legible.  
+
+**Essay Question (3 points): Compare the displays.  How do the distributions compare to normality? Take into account the criteria discussed in the sync sessions to evaluate non-normality.**
+
+***Answer: (Enter your answer here.)***
+
+(b)	(2 points) The boxplots in (3)(a) indicate that there are outlying RATIOs for each sex. *boxplot.stats()* can be used to identify outlying values of a vector. 
+(c)	(6 points) Present the abalones with these outlying RATIO values along with their associated variables in "mydata". Display the observations by passing a data frame to the kable() function. Basically, we want to output those rows of "mydata" with an outlying RATIO, but we want to determine outliers looking separately at infants, females and males.

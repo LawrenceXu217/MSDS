@@ -1,0 +1,181 @@
+---
+title: "Data Analysis - Worksheet 2"
+---
+
+# Worksheet 2
+#PART 3
+#(a)	(2 point) Consider the table of counts using SEX and CLASS, you created above. Add margins to this table 
+# (Hint: There should be 15 cells in this table plus the marginal totals. Apply *table()* first, 
+# then pass the table object to *addmargins()* (Kabacoff Section 7.2 pages 144-147)).
+# Lastly, present a barplot of these data; ignoring the marginal totals. 
+```{r part 3 question a}
+s_cls_table <- table(mydata$CLASS, mydata$SEX)
+s_cls_margins<- addmargins(s_cls_table)
+
+# barplot
+```{r part2}
+barplot(s_cls_table, beside = TRUE, 
+        col = c("blue", "red", "green"), 
+        main = "Barplot of SEX and CLASS (Without Marginal Totals)",
+        legend = rownames(s_cls_table),
+        xlab = "SEX", ylab = "Count")
+```
+
+**Essay Question (3 points):  Discuss the sex distribution of abalones.  What stands out about the distribution of abalones by CLASS?**
+
+*** Answer ***
+The barplot shows that Infant abalones are most common, especially in lower classes (A1 and A2), 
+indicating that these classes may correlate with younger abalones. Male abalones are particularly prevalent in CLASS A3, 
+which suggesting that this class is associated with maturing males. Female abalones have a more balanced distribution across classes, 
+with slightly higher counts in CLASS A5.Base on it, this pattern suggests that the CLASS categories likely reflect different growth stages,
+ with younger abalones in lower classes and mature abalones in higher ones.
+
+(b)(2 points) Using "work", construct a scatterplot matrix of variables 2-6 with *plot(work[, 2:6])* (these are the continuous variables excluding VOLUME and RATIO).
+  The sample "work" will not be used in the remainder of the assignment.
+
+```{r part3 b}
+plot(work[, 2:6], 
+      main = "Scatterplot Matrix of Variables 2-6", 
+      pch = 17, 
+      col = "blue")
+```
+
+**Essay Question (2 points):  Discuss the relationships of the variables in your matrix. What information provides to you if any?
+The scatterplot matrix shows strong positive relationships between most variables, 
+indicating that as one measurement increases, others tend to as well. 
+For example, LENGTH and DIAM are highly correlated, as are WHOLE and SHUCK, 
+showing that as abalones grow, their size and weight increase proportionally.
+
+***##### Section 4: ( 16 points) Summarizing the data using graphics.***
+
+
+(a)  (2 points) Use "mydata" to plot WHOLE versus VOLUME. Color code data points by CLASS.
+```{r part a}
+plot(mydata$VOLUME, mydata$WHOLE, 
+     col = as.factor(mydata$CLASS), 
+     pch = 17, 
+     xlab = "VOLUME", 
+     ylab = "WHOLE", 
+     main = "WHOLE vs VOLUME by CLASS (Rectangular Approximation)")
+legend("topright", legend = unique(mydata$CLASS), col = 1:length(unique(mydata$CLASS)), pch = 17)
+```
+
+(b)	(2 points) Use "mydata" to plot a histogram of SHUCK and a histogram of WHOLE. Present the two histograms in parallel, the one next to the other and ensure that the y-axis units of the two histograms are the same so you can compare the results. Use title, legend, labels for the axis and different colors. 
+```{r part 3 section 4}
+hist(mydata$SHUCK, 
+     col = "pink", 
+     main = "Histogram of SHUCK", 
+     xlab = "SHUCK", 
+     ylab = "Frequency", 
+     ylim = c(0, 120),
+     border = "black")
+legend("topright", legend = "SHUCK", fill = "pink", border = "black")
+
+# Histogram for WHOLE
+hist(mydata$WHOLE, 
+     col = "purple", 
+     main = "Histogram of WHOLE", 
+     xlab = "WHOLE", 
+     ylab = "Frequency", 
+     ylim = c(0, 120),  
+     border = "black")
+legend("topright", legend = "WHOLE", fill = "purple", border = "black")
+```
+(c)	(2 points) Use "mydata" to plot a boxplot of SHUCK and a boxplot of WHOLE. Present the two histograms in parallel, the one next to the other, and ensure that the y-axis units of the two boxplots are the same so you can compare the results. Use title, legend, labels for the axis, and different colors. 
+```{r part c}
+par(mfrow = c(1, 2))
+
+# Boxplot for SHUCK
+boxplot(mydata$SHUCK, 
+        col = "yellow", 
+        main = "Boxplot of SHUCK", 
+        ylab = "Weight", 
+        ylim = c(0, 180), 
+        names = "SHUCK") 
+legend("topright", legend = "SHUCK", fill = "yellow", border = "black")
+
+# Boxplot for WHOLE
+boxplot(mydata$WHOLE, 
+        col = "red", 
+        main = "Boxplot of WHOLE", 
+        ylab = "Weight", 
+        ylim = c(0, 180),  
+        names = "WHOLE")
+legend("topright", legend = "WHOLE", fill = "red", border = "black")
+```
+
+(d)	(2 points) Now, plot parallel vertical boxplots of SHUCK by SEX. You should have three boxplots in one graph. Change the colors, titles, legends etc…
+```{r part d}
+boxplot(SHUCK ~ SEX, data = mydata, 
+        col = c("pink", "orange", "purple"), 
+        main = "Boxplot of SHUCK by SEX", 
+        xlab = "SEX", 
+        ylab = "SHUCK Weight")
+legend("topright", 
+       legend = levels(mydata$SEX), 
+       fill = c("pink", "orange", "purple"), 
+       title = "SEX")
+```
+(e)	(2 points) And finally plot parallel vertical boxplots of SHUCK by CLASS. You should have three boxplots in one graph. Change the colors, titles, legends etc…
+```{r part e}
+class_colors <- c("skyblue", "lightgreen", "salmon", "gold", "violet")
+
+boxplot(SHUCK ~ CLASS, data = mydata, 
+        col = class_colors,
+        main = "Boxplot of SHUCK by CLASS", 
+        xlab = "CLASS", 
+        ylab = "SHUCK Weight")
+legend("topright", 
+       legend = sort(unique(mydata$CLASS)), 
+       fill = class_colors, 
+       title = "CLASS")
+```
+(f)	(4 points) Now, let’s compare SHUCK and WHOLE. Use "mydata" to plot SHUCK versus WHOLE with WHOLE on the horizontal axis. Color code data points by CLASS. As an aid to interpretation, determine the maximum value of the ratio of SHUCK to WHOLE.  Add to the chart a straight line with zero intercept using this maximum value as the slope of the line. If you are using the 'base R' *plot()* function, you may use *abline()* to add this line to the plot. Use *help(abline)* in R to determine the coding for the slope and intercept arguments in the functions. If you are using ggplot2 for visualizations, *geom_abline()* should be used.
+```{r part 4}
+class_colors <- c("skyblue", "lightgreen", "salmon", "gold", "violet")
+class_levels <- sort(unique(mydata$CLASS))
+color_mapping <- setNames(class_colors, class_levels)
+
+plot(mydata$WHOLE, mydata$SHUCK, 
+     col = color_mapping[mydata$CLASS], 
+     pch = 19, 
+     xlab = "WHOLE", 
+     ylab = "SHUCK", 
+     main = "SHUCK vs WHOLE by CLASS")
+
+legend("topleft", legend = class_levels, col = class_colors, pch = 19, title = "CLASS")
+
+# cal the maximum
+max_ratio <- max(mydata$SHUCK / mydata$WHOLE, na.rm = TRUE)
+abline(a = 0, b = max_ratio, col = "red", lty = 2, lwd = 2)
+```
+
+**Essay Question (2 points):  By now, you have enough data to review the relation of SHUCK and WHOLE and the dispersion of data. How does the variability in the last plot differ from the plot in (2a)?  Compare the two displays.  Keep in mind that SHUCK is a part of WHOLE.  Consider the location of the different age classes.**
+
+***Answer: (Enter your answer here.)***
+////
+
+***### Section 5: (15 points) Getting insights about the data using graphs.***
+
+(a)	(6 points) Use "mydata" to create a multi-figured plot with histograms, boxplots and Q-Q plots of RATIO differentiated by sex. This can be done using *par(mfrow = c(3,3))* and base R or *grid.arrange()* and ggplot2. The first row would show the histograms, the second row the boxplots and the third row the Q-Q plots. Be sure these displays are legible.  
+
+**Essay Question (3 points): Compare the displays.  How do the distributions compare to normality? Take into account the criteria discussed in the sync sessions to evaluate non-normality.**
+
+***Answer: (Enter your answer here.)***
+
+(b)	(2 points) The boxplots in (3)(a) indicate that there are outlying RATIOs for each sex. *boxplot.stats()* can be used to identify outlying values of a vector. 
+```{r b}
+sex_levels <- unique(mydata$SEX)
+
+for (sex in sex_levels) {
+  subset_data <- mydata$RATIO[mydata$SEX == sex]
+  
+  outliers <- boxplot.stats(subset_data)$out
+  
+  cat("Outliers for SEX =", sex, ":\n")
+  print(outliers)
+  cat("\n")
+}
+```
+(c)	(6 points) Present the abalones with these outlying RATIO values along with their associated variables in "mydata". Display the observations by passing a data frame to the kable() function. Basically, we want to output those rows of "mydata" with an outlying RATIO, but we want to determine outliers looking separately at infants, females and males.
+
